@@ -14,7 +14,6 @@ package {
       super();
       this.build();
       this.setup();
-      this.addEventListener(Event.ENTER_FRAME, this.onEnterFrame);
     }
 
     private function build() : void {
@@ -48,18 +47,22 @@ package {
       }
     }
 
-    private function saveConfig(key:String, value:String) : void {
-      ExternalInterface.call("UIComponent.OnSaveConfig", "navigationmenu.swf", key, value);
-    }
-
     private function onLoadModConfiguration(key:String, val:String) : * {
       this.cfg[key] = val;
+
+      if(!hasEventListener(Event.ENTER_FRAME) && val != "null")
+        addEventListener(Event.ENTER_FRAME, onEnterFrame)
     }
 
     private function onEnterFrame(e:Event) : * {
-      for (var key:String in this.cfg)
-        if (this.cfg[key])
+      var found:Boolean = false;
+      for (var key:String in this.cfg) {
+        if (this.cfg[key]) {
           ExternalInterface.call("OnMenuOptionSelected", this.cfg[key]);
+          found = true;
+        }
+      }
+      if(!found) removeEventListener(Event.ENTER_FRAME, onEnterFrame);
     }
   }
 }
