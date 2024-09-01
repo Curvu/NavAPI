@@ -65,3 +65,4 @@ private function onTick(e:TimerEvent) : void {
 ## Credits
 - Geoflay, base .swf file
 - Grainus, idea
+- abbie, idea
