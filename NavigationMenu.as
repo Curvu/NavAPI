@@ -8,7 +8,62 @@ package {
   public class NavigationMenu extends Sprite {
     public var claim:MovieClip;
     public var daily:MovieClip;
-    private var cfg:Object = { "store": null, "marketplace": null, "character": null, "inventory": null, "classchanger": null, "achievement": null, "leaderboard": null, "collections": null, "activities": null, "clubs": null, "friendlist": null, "likedworlds": null, "cornerstone": null, "map": null, "welcome": null, "claims": null, "dailylogin": null, "howtoplay": null, "settings": null, "bomberroyale": null, "atlas": null, "auto_claims": false };
+
+    private const parser:Object = { "store": "store", "marketplace": "marketplace", "character": "character", "inventory": "inventory", "classchanger": "classChanger", "achievement": "achievement", "leaderboard": "leaderboard", "collections": "collections", "activities": "activities", "clubs": "clubs", "friendlist": "friendList", "likedworlds": "likedWorlds", "cornerstone": "cornerstone", "map": "map", "welcome": "welcome", "claims": "claims", "dailyLogin": "dailyLogin", "howtoplay": "howtoplay", "settings": "settings", "bomberroyale": "bomberRoyale", "atlas": "atlas", "auto_claims": "auto_claims" };
+
+    public const TYPE:Object = {
+      "INT": 0
+    };
+
+    public const convert:Object = {
+      "store": [TYPE.INT, 0, 1],
+      "marketplace": [TYPE.INT, 0, 1],
+      "character": [TYPE.INT, 0, 1],
+      "inventory": [TYPE.INT, 0, 1],
+      "classChanger": [TYPE.INT, 0, 1],
+      "achievement": [TYPE.INT, 0, 1],
+      "leaderboard": [TYPE.INT, 0, 1],
+      "collections": [TYPE.INT, 0, 1],
+      "activities": [TYPE.INT, 0, 1],
+      "clubs": [TYPE.INT, 0, 1],
+      "friendList": [TYPE.INT, 0, 1],
+      "likedWorlds": [TYPE.INT, 0, 1],
+      "cornerstone": [TYPE.INT, 0, 1],
+      "map": [TYPE.INT, 0, 1],
+      "welcome": [TYPE.INT, 0, 1],
+      "claims": [TYPE.INT, 0, 1],
+      "dailyLogin": [TYPE.INT, 0, 1],
+      "howtoplay": [TYPE.INT, 0, 1],
+      "settings": [TYPE.INT, 0, 1],
+      "bomberRoyale": [TYPE.INT, 0, 1],
+      "atlas": [TYPE.INT, 0, 1],
+      "auto_claims": [TYPE.INT, 0, 1]
+    };
+
+    private var cfg:Object = {
+      "store": 0,
+      "marketplace": 0,
+      "character": 0,
+      "inventory": 0,
+      "classChanger": 0,
+      "achievement": 0,
+      "leaderboard": 0,
+      "collections": 0,
+      "activities": 0,
+      "clubs": 0,
+      "friendList": 0,
+      "likedWorlds": 0,
+      "cornerstone": 0,
+      "map": 0,
+      "welcome": 0,
+      "claims": 0,
+      "dailyLogin": 0,
+      "howtoplay": 0,
+      "settings": 0,
+      "bomberRoyale": 0,
+      "atlas": 0,
+      "auto_claims": 0
+    };
 
     public function NavigationMenu() {
       super();
@@ -36,7 +91,7 @@ package {
       switch(btn) {
       case 4:
         this.claim.visible = visible;
-        if (visible && this.cfg["auto_claims"] == "true")
+        if (visible && this.cfg["auto_claims"])
           ExternalInterface.call("OnMenuOptionSelected", "claims");
         return;
       case 5:
@@ -47,10 +102,21 @@ package {
       }
     }
 
-    private function onLoadModConfiguration(key:String, val:String) : * {
-      this.cfg[key] = val;
+    public static function clamp(p:Number, min:Number, max:Number) : Number {
+      return Math.max(min, Math.min(max, p));
+    }
 
-      if(!hasEventListener(Event.ENTER_FRAME) && val != "null")
+    private function onLoadModConfiguration(key:String, val:String) : * {
+      if ((key = this.parser[key]) == null) return;
+      switch(convert[key][0]) {
+      case TYPE.INT:
+        cfg[key] = int(clamp(Number(val), convert[key][1], convert[key][2]));
+        break;
+      default:
+        break;
+      }
+
+      if(!hasEventListener(Event.ENTER_FRAME) && val == "1")
         addEventListener(Event.ENTER_FRAME, onEnterFrame)
     }
 
@@ -58,7 +124,7 @@ package {
       var found:Boolean = false;
       for (var key:String in this.cfg) {
         if (this.cfg[key]) {
-          ExternalInterface.call("OnMenuOptionSelected", this.cfg[key]);
+          ExternalInterface.call("OnMenuOptionSelected", key);
           found = true;
         }
       }

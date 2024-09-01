@@ -10,35 +10,34 @@ An API for creating custom navigation in Trove between different mods.
 The mod has a config file that allows you to change some of the things:
 ```bash
 [navigationmenu.swf]
-auto_claims = true # can be true or false, if true it will automatically open the "claims" window
+auto_claims = 1 # can be 0/1, if 1 it will automatically open the "claims" window whenever there is a new claim
 ```
 
 ## Available options (key = value)
 
 | Key            | Value          |
 |----------------|----------------|
-| store          | store          |
-| marketplace    | marketplace    |
-| character      | character      |
-| inventory      | inventory      |
-| classchanger   | classChanger   |
-| achievement    | achievement    |
-| leaderboard    | leaderboard    |
-| collections    | collections    |
-| activities     | activities     |
-| clubs          | clubs          |
-| friendlist     | friendList     |
-| likedworlds    | likedWorlds    |
-| cornerstone    | cornerstone    |
-| map            | map            |
-| welcome        | welcome        |
-| claims         | claims         |
-| dailyLogin     | dailyLogin     |
-| howtoplay      | howtoplay      |
-| settings       | settings       |
-| bomberroyale   | bomberRoyale   |
-| atlas          | atlas          |
-
+| store          | 0/1            |
+| marketplace    | 0/1            |
+| character      | 0/1            |
+| inventory      | 0/1            |
+| classchanger   | 0/1            |
+| achievement    | 0/1            |
+| leaderboard    | 0/1            |
+| collections    | 0/1            |
+| activities     | 0/1            |
+| clubs          | 0/1            |
+| friendlist     | 0/1            |
+| likedworlds    | 0/1            |
+| cornerstone    | 0/1            |
+| map            | 0/1            |
+| welcome        | 0/1            |
+| claims         | 0/1            |
+| dailyLogin     | 0/1            |
+| howtoplay      | 0/1            |
+| settings       | 0/1            |
+| bomberroyale   | 0/1            |
+| atlas          | 0/1            |
 
 ## Snippet Example
 ```as
