@@ -1,0 +1,9 @@
+---
+author: Jus7Ace
+title: NavAPI
+notes: 'API for other mods to interact with the navigation menu, allowing multiple mods using the navigation menu to coexist.'
+files:
+- ui/navigationmenu.swf
+tags:
+- UI
+...
