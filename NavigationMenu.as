@@ -39,7 +39,8 @@ package {
     }
 
     public function onEnterFrame(e:Event) : void {
-      for (var key:String in config.menus) {
+      for (var i:int = 0; i < config.menus.length; i++) {
+        var key:String = config.menus[i];
         if (config.cfg[key]) {
           ExternalInterface.call("OnMenuOptionSelected", key);
         }
