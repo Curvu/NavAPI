@@ -4,6 +4,8 @@ title: NavAPI
 notes: 'API for other mods to interact with the navigation menu, allowing multiple mods using the navigation menu to coexist.'
 files:
 - ui/navigationmenu.swf
+- ui/navapi.png
+previewPath: ui/navapi.png
 tags:
 - UI
 ...

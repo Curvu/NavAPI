@@ -10,7 +10,7 @@ An API for creating custom navigation in Trove between different mods.
 The mod has a config file that allows you to change some of the things:
 ```bash
 [navigationmenu.swf]
-auto_claims = 1 # can be 0/1, if 1 it will automatically open the "claims" window whenever there is a new claim
+auto_claims = 1 # if 1 it will automatically open the "claims" window whenever there is a new claim
 ```
 
 ## Available options (key = value)
@@ -39,7 +39,7 @@ auto_claims = 1 # can be 0/1, if 1 it will automatically open the "claims" windo
 | bomberroyale   | 0/1            |
 | atlas          | 0/1            |
 
-## Snippet Example
+## Snippet Usage Example
 ```as
 private function onInviteAll(e:MouseEvent) : void {
   var timer:Timer = new Timer(600, list.length);
@@ -48,7 +48,7 @@ private function onInviteAll(e:MouseEvent) : void {
 }
 
 private function onTick(e:TimerEvent) : void {
-  cfg.saveExternalConfig("navigationmenu.swf", "friendlist", "friendList");
+  cfg.saveExternalConfig("navigationmenu.swf", "friendlist", "1");
 
   // ...
   // invite player
@@ -56,13 +56,12 @@ private function onTick(e:TimerEvent) : void {
 
   var timer:Timer = new Timer(200, 1);
   timer.addEventListener(TimerEvent.TIMER_COMPLETE, function(e:TimerEvent):void {
-    cfg.saveExternalConfig("navigationmenu.swf", "friendlist", "null");
+    cfg.saveExternalConfig("navigationmenu.swf", "friendlist", "0");
   });
   timer.start();
 }
 ```
 
 ## Credits
-- Geoflay, base .swf file
-- Grainus, idea
-- abbie, idea
+- Geoflay - base .swf file
+- Grainus and abbie - idea

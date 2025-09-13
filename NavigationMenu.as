@@ -6,16 +6,12 @@ package {
   import flash.external.ExternalInterface;
   import flash.geom.*;
 
-  // TODO: startup minimap
-  // TODO: minimap is opening without reason when doing ship
-
   public class NavigationMenu extends Sprite {
     public var claim:MovieClip;
     public var daily:MovieClip;
 
     public var miniMap:ObjectPreview;
     public var miniMapEnabled:Boolean;
-    public var miniMapStartupCheck:Boolean;
     public var refreshDelayCounter:int = 0;
 
     public function NavigationMenu() {
@@ -83,7 +79,7 @@ package {
         config.cfg[key] = int(curvu.clamp(Number(val), config.convert[key][1], config.convert[key][2]));
         break;
       case config.TYPE.BOOL:
-        config.cfg[key] = val == "true";
+        config.cfg[key] = val == "true" || val == "1";
         break;
       default:
         break;
@@ -104,22 +100,20 @@ package {
     }
 
     public function destroyMinimap() : void {
-      this.miniMapStartupCheck = false;
       this.removeChild(this.miniMap);
-      ExternalInterface.call("UIComponent.OnSaveConfig", "map.swf", "minimap_disable_map", "0");
-      ExternalInterface.call("UIComponent.OnSaveConfig", "map.swf", "minimap_recently_closed", "1");
-      ExternalInterface.call("UIComponent.OnSaveConfig", "map.swf", "minimap_recently_closed", "0");
+      ExternalInterface.call("UIComponent.OnSaveConfig", "map.swf", "minimap_disable_map", "false");
+      ExternalInterface.call("UIComponent.OnSaveConfig", "map.swf", "minimap_recently_closed", "true");
+      ExternalInterface.call("UIComponent.OnSaveConfig", "map.swf", "minimap_recently_closed", "false");
     }
 
     public function updateMinimap() : void {
-      if(!config.cfg.minimap) return;
-      if(!this.miniMapStartupCheck) {
-        this.miniMapStartupCheck = true;
-        this.miniMapEnabled = true;
+      if (!config.cfg.minimap || !this.miniMapEnabled) return;
+
+      if (this.miniMap.parent == null) {
         this.addChild(this.miniMap);
-        ExternalInterface.call("UIComponent.OnSaveConfig", "map.swf", "minimap_disable_map", "1");
+        ExternalInterface.call("UIComponent.OnSaveConfig", "map.swf", "minimap_disable_map", "true");
       }
-      if(!this.miniMapEnabled) return;
+
       this.miniMap.alpha = config.cfg.minimap_opacity / 100;
       this.miniMap.scaleX = config.cfg.minimap_scale / 100;
       this.miniMap.scaleY = config.cfg.minimap_scale / 100;
